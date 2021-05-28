@@ -28,7 +28,7 @@
 
             <p>${error_message}</p>
 
-            <a href=""></a>
+            <a href="/lab03/arithmetic">arithmetic Calculator</a>
         </form>
     </body>
 </html>

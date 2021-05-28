@@ -38,7 +38,7 @@
 
             <p>${error_message}</p>
 
-            <a href="./ageCalculator.jsp">Age calculator</a>
+            <a href="/lab03/age">Age calculator</a>
         </form>
     </body>
 </html>
