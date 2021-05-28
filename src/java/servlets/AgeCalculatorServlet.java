@@ -33,7 +33,7 @@ public class AgeCalculatorServlet extends HttpServlet {
 
         if (!isNumeric(userAge)) {
             request.setAttribute("message", "Invalid entry.Please enter a number");
-            getServletContext().getRequestDispatcher("/WEB-INF/ageCalculator.jsp.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/ageCalculator.jsp").forward(request, response);
             return;
         }
 

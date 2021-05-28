@@ -1,86 +1,69 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-/**
- *
- * @author 844568
- */
 public class AirthmeticCalculatorServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AirthmeticCalculatorServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AirthmeticCalculatorServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/arithmeticCalculator.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String firstNumber = request.getParameter("first_number");
+        String secondNumber = request.getParameter("second_number");
+
+        //request.setAttribute("Age", userAge);
+        if (!isNumeric(firstNumber) || !isNumeric(secondNumber)) {
+            request.setAttribute("message", "Invalid entry.Please enter a number");
+            getServletContext().getRequestDispatcher("/WEB-INF/arithmeticCalculator.jsp").forward(request, response);
+            return;
+        }
+
+        int first = Integer.parseInt(firstNumber);
+        int second = Integer.parseInt(secondNumber);
+
+        String plus = request.getParameter("plus");
+        String minus = request.getParameter("minus");
+        String multiply = request.getParameter("multiply");
+        String divide = request.getParameter("divide");
+
+        double result = 0;
+        if (plus != null) {
+            result = first + second;
+        } else if (minus != null) {
+            result = first - second;
+        } else if (multiply != null) {
+            result = first * second;
+        } else if (divide != null) {
+            result = first / second;
+        }
+
+        request.setAttribute("calculationResult", result);
+
+        getServletContext().getRequestDispatcher("/WEB-INF/arithmeticCalculator.jsp").forward(request, response);
+
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    public static boolean isNumeric(String value) {
+        double numberValue;
 
+        if (value == null || value.equals("")) {
+            System.out.println("The value that the user entered is null or empty");
+            return false;
+        }
+        try {
+            numberValue = Double.parseDouble(value);
+            return true;
+        } catch (NumberFormatException ex) {
+            System.out.println("The entery cannot be parsed to an integer");
+        }
+        return false;
+    }
 }
