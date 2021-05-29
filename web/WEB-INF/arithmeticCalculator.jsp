@@ -36,7 +36,7 @@
 
             <p> Result ${calculationResult}</p>
 
-            <p>${error_message}</p>
+            <p>${message}</p>
 
             <a href="/lab03/age">Age calculator</a>
         </form>
