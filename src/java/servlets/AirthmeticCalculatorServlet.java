@@ -42,7 +42,7 @@ public class AirthmeticCalculatorServlet extends HttpServlet {
         } else if (multiply != null) {
             result = first * second;
         } else if (divide != null) {
-            result = first / second;
+            result = first % second;
         }
 
         request.setAttribute("calculationResult", result);
